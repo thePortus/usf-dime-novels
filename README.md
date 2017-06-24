@@ -32,7 +32,7 @@ pip3 install -r requirements.txt
 This module also requires that you install Selenium webdriver for your browser of choice. To do so, visit one of the following...
 1. [Google Chrome](https://sites.google.com/a/chromium.org/chromedriver/downloads)
 2. [Mozilla Firefox](https://github.com/mozilla/geckodriver/releases)
-Download the driver, and place it somewhere in your $PATH (most likely your user folder). [Check here for further details](http://selenium-python.readthedocs.io/installation.html#drivers)
+Download the driver, and place it somewhere in your $PATH (most likely your user folder in Windows, or in /usr/local/bin on OSX/Linux). [Check here for further details](http://selenium-python.readthedocs.io/installation.html#drivers)
 
 ---
 

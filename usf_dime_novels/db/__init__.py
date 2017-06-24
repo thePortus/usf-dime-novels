@@ -10,6 +10,8 @@ the scraper and exporter modules), in order to store and retreive data. If
 doing your own project by customizing the scraper module, you should change
 these models to reflect the tables you wish to store.
 """
+import os
+
 import peewee as sql
 
 from usf_dime_novels.common import settings, Printer
@@ -39,3 +41,8 @@ def init_db(mode='live'):
         Printer('Database built')
     db.close()
     return True
+
+
+# If the designated directory for the sqlite db doesn't exist, make it
+if not os.path.exists(settings.DB_DIR):
+    os.makedirs(settings.DB_DIR)
