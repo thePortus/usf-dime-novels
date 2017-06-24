@@ -1,0 +1,9 @@
+[run]
+source = usf_dime_novels
+
+[report]
+show_missing = True
+skip_covered = True
+omit =
+    *tests/*
+    setup.py

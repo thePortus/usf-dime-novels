@@ -1,0 +1,24 @@
+#Python Files
+*.pyc
+__pycache__
+
+# Build Files
+*.egg-info
+MANIFEST
+htmlcov
+build
+dist
+
+
+# Testing files
+.pypirc
+.coverage
+*.log
+*.db
+input/*
+output/*
+
+# OSX and Project Files
+*.sublime-*
+.DS_Store
+*.csv
