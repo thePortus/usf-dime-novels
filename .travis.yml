@@ -1,0 +1,30 @@
+# test in python
+language: python
+# python versions tested
+python:
+  - "3.6"
+# enable the use of sudo
+sudo: required
+# operating system to use
+os: linux
+# distribution to use
+dist: precise
+# setting environment variables
+env:
+  - PACKAGE_VERSION=0.0.1
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+# configure environment to run headless selenium tests
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3
+# command to run tests
+script:
+  - cd usf-dime-novels
+  - nosetests --with-coverage --cover-package=usf_dime_novels
+after_success:
+  coveralls
+notifications:
+  on_success: never
+  on_failure: never

@@ -14,8 +14,21 @@ from .base_selenium import BaseSeleniumScraper
 class RootCollections(BaseSeleniumScraper):
     """
     Scrapes the starting page for the USF Digital Collection's 'Dime Novel'
-    collection, using Selenium to click through and get data on subcollections.
+    collection. Gathers any links on the page, then looks for the link to the
+    next page. If link to the next page is found, it keeps calling new
+    instances of itself recursively for each new page. Once the end of the
+    browse menu is reached, all the links are returned back to the original
+    RootCollections instance. Then, it calls the scrapers for each collection.
     """
+
+    def get_collection_elements(self):
+        """
+        Drills into .soup looking for the wrapper containing the list of
+        collections. Then finds the <section> tag for each collection in the
+        list, returning them as a list of BeautifulSoup objects.
+        """
+        wrapper = self.soup.find('div', id='main-content')
+        return wrapper.find_all('section', class_='sbkBrv_SingleResult')
 
     def mine(self):
         """
@@ -26,5 +39,5 @@ class RootCollections(BaseSeleniumScraper):
         updated results. Stores information in a sqlite dB for later
         exportation using models from the schema module.
         """
-        data = self.scrape()
-        return data
+        self.scrape()
+        collections = self.get_collection_elements()
