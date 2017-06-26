@@ -13,18 +13,32 @@ from .base_selenium import BaseSeleniumScraper
 
 class CollectionElement:
     """
+    Object to interact with a single collection's summary metadata found on the
+    main browse page. Its properties give quick access to collection info and
+    it enables creating the collection with the database model object
     """
     soup = None
 
-    def __init__(html_soup):
+    def __init__(self, html_soup):
         """
         Init function receives soup of one collection and stores it in .soup
 
         arguments
         html_soup           BeautifulSoup           soup of a single collection
         """
-        self.soup = html_soup
-        pass
+        # Drilling down to the internal wrapper <div> tag
+        self.soup = html_soup.find('div', class_='sbkBrv_SingleResultDesc')
+
+    @property
+    def title(self):
+        """
+        Returns the title of the collection
+        """
+        return self.soup.find(
+            'span', class_='briefResultsTitle'
+        ).find(
+            'a'
+        ).get_text()
 
 
 class RootCollections(BaseSeleniumScraper):
@@ -75,3 +89,5 @@ class RootCollections(BaseSeleniumScraper):
         collection_elements = self.get_collection_elements()
         # Turns each soup element into a CollectionElement object
         collections = self.get_info_from_collections(collection_elements)
+        # NOTE THE RETURN VALUE IS MERELY TO PASS TESTING< MUST BE CHANGED
+        return self.soup

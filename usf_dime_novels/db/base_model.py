@@ -7,7 +7,7 @@ for all child classes.
 """
 import peewee as sql
 
-from . import database
+from usf_dime_novels import database
 
 
 class BaseModel(sql.Model):
