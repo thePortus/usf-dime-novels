@@ -26,4 +26,4 @@ TEST_URLS = {
 DB_DIR = 'files'
 # Set the live and testing database names
 LIVE_DB = 'dimenovels.db'
-TESTING_DB = 'dimenovels.db'
+TESTING_DB = 'testing.db'
