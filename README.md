@@ -24,6 +24,8 @@ Beyond scraping the dime novels, this repo was designed to be reconfigurable, pr
 ---
 ## Installation
 
+_Software requirements_:[You need to install Python 3](https://python.org/)
+
 _Knowledge requirements_: A beginner-intermediate understanding of Python and a beginner knowledge of command-line interface. For excellent tutorials on these subjects, check out Codecademy's tutorials on [Python](https://www.codecademy.com/learn/python) and [CLI](https://www.codecademy.com/learn/learn-the-command-line).
 
 _Optional: works best if installed in a virtual environment_. [Directions for OSX, Linux](https://virtualenvwrapper.readthedocs.io/en/latest/), or if on [Directions for Windows](https://pypi.python.org/pypi/virtualenvwrapper-win)
@@ -37,15 +39,14 @@ cd dimenovels
 pip3 install -r requirements.txt
 ```
 
-This module also requires that you install Selenium webdriver for your browser of choice. To do so, visit one of the following...
-1. [Google Chrome](https://sites.google.com/a/chromium.org/chromedriver/downloads)
-2. [Mozilla Firefox](https://github.com/mozilla/geckodriver/releases)
+This module also requires that you install Selenium webdriver for your browser of choice. To do so, visit the following...
+* [Mozilla Firefox](https://github.com/mozilla/geckodriver/releases)
 Download the driver, and place it somewhere in your $PATH (most likely your user folder). [Check here for further details](http://selenium-python.readthedocs.io/installation.html#drivers)
 
 ---
 
 _For developers_, automated test running provided by nose2 and coverage. Tests require Firefox webdrivers (see above).
 
-To run tests, make a separate virtualenv. Then, navigate to the repo root directory, enter `pip install -r requirements/testing.txt`. Set an environment variable named USF_DIME_NOVEL_DB to 'testing'. Finally, run the tests with `nose2`. Test and coverage results will print to screen and also save in the htmlcov subdirectory.
+To run tests, make a separate virtualenv. Then, navigate to the repo root directory, enter `pip install -r requirements/testing.txt`. Set an environment variable named `USF_DIME_NOVEL_DB` to `testing`. Finally, run the tests with `nose2`. Test and coverage results will print to screen and also save in the htmlcov subdirectory.
 
 ---

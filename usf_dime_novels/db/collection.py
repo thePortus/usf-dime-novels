@@ -38,8 +38,13 @@ class Collection(BaseModel):
         """
         Gets all subjects in the collection via the many-to-many table
         """
-        # TODO
-        pass
+        return Subject.select().join(
+            SubjectInCollection
+        ).join(
+            Collection
+        ).where(
+            Collection.cid == self.cid
+        )
 
 
 class Publisher(BaseModel):
@@ -51,8 +56,13 @@ class Publisher(BaseModel):
         Gets all collections in which the publisher appears via the
         many-to-many table
         """
-        # TODO
-        pass
+        return Collection.select().join(
+            PublisherInCollection
+        ).join(
+            Publisher
+        ).where(
+            Publisher.name == self.name
+        )
 
 
 class Subject(BaseModel):
@@ -64,10 +74,28 @@ class Subject(BaseModel):
         Gets all collections in which the subject appears via the
         many-to-many table
         """
-        # TODO
-        pass
+        return Collection.select().join(
+            SubjectInCollection
+        ).join(
+            Subject
+        ).where(
+            Subject.name == self.name
+        )
 
 
 class PublisherInCollection(BaseModel):
+    """
+    The many-to-many table representing each time a publisher was responsible
+    for a collection.
+    """
     collection = sql.ForeignKey(Collection, related_name='publishers')
     publisher = sql.ForeignKey(Publisher, related_name='collections')
+
+
+class SubjectInCollection(BaseModel):
+    """
+    The many-to-many table representing each time a subject appears in a
+    collection.
+    """
+    collection = sql.ForeignKey(Collection, related_name='publishers')
+    subject = sql.ForeignKey(Publisher, related_name='collections')
