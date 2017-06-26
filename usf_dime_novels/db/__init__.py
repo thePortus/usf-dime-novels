@@ -70,14 +70,3 @@ def init_db(mode='live'):
     # Close tb connection
     db.close()
     return db
-
-
-def wipe_db():
-    """
-    Summarily wipes each record in every table. Used to quickly reset the dB
-    back to a starting state. This should only be called by init_db during
-    testing, so that each test run has a clean database.
-    """
-    for table in table_list:
-        if table.table_exists():
-            table_records =
