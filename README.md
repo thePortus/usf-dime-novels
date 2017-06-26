@@ -1,13 +1,15 @@
 # USF Dime Novel Digital Collection
 
-### Python module to interact with the digital Dime Novel collection from the [University of South Florida](https://www.usf.edu).
+[![Build Status](https://travis-ci.org/thePortus/usf-dime-novels.svg?branch=master)](https://travis-ci.org/thePortus/usf-dime-novels)[![Coverage Status](https://coveralls.io/repos/github/thePortus/usf-dime-novels/badge.svg?branch=master)](https://coveralls.io/github/thePortus/usf-dime-novels?branch=master)
 
-*For students of the Digital Humanities*
+Python module to interact with the digital Dime Novel collection from the [University of South Florida](https://www.usf.edu).
 
 [By David J. Thomas](mailto:dave.a.base@gmail.com), [thePortus.com](http://thePortus.com)<br>
 Instructor of Ancient History and Digital Humanities<br>
 Department of History<br>
 University of South Florida
+
+*For students of the Digital Humanities*
 
 The [University of South Florida's Digital Collections](http://digital.lib.usf.edu/) houses a repository of [historic dime novels](http://digital.lib.usf.edu/dimenovels). Spanning multiple collections with publications spanning many decades, the collection houses a wealth of information. Dime novels have long been a subject of scholarly interest, often reflecting evolving social and cultural concerns. Yet, performing a 'distant reading' of these texts is not easy. This scraper project provides easy automation for acquiring this data in formats designed for text analysis.
 
