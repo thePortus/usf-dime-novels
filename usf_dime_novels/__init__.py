@@ -17,7 +17,7 @@ https://github.com/thePortus/dimenovels
 import sys
 # For use with Travis CI and Coveralls testing suites
 # from pkg_resources import get_distribution
-from db import database, init_db
+from .db import database, init_db
 
 init_db()
 

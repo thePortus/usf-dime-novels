@@ -15,14 +15,28 @@ env:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
-# configure environment to run headless selenium tests
+# install firefox and chrome for selenium tests
+addons:
+  firefox: latest
+before_script:
+  # for Selenium testing....
+  # install unzip
+  - sudo apt-get install unzip -y
+  # configure environment to run headless selenium tests
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
+  # download gecko (Firefox) webdrivers
+  - wget https://github.com/mozilla/geckodriver/releases/download/v0.13.0/geckodriver-v0.13.0-linux64.tar.gz
+  # extract webdriver
+  - tar -xvzf geckodriver*
+  # make webdriver executable
+  - chmod +x geckodriver
+  # move webdriver within $PATH
+  - sudo mv -f geckodriver /usr/local/bin/
 # command to run tests
 script:
-  - cd usf-dime-novels
-  - nosetests --with-coverage --cover-package=usf_dime_novels
+  - nose2
 after_success:
   coveralls
 notifications:
