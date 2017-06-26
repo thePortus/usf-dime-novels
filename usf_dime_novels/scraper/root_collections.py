@@ -11,6 +11,22 @@ site, as it will call subsequent scrapers upon finding links to subcollections.
 from .base_selenium import BaseSeleniumScraper
 
 
+class CollectionElement:
+    """
+    """
+    soup = None
+
+    def __init__(html_soup):
+        """
+        Init function receives soup of one collection and stores it in .soup
+
+        arguments
+        html_soup           BeautifulSoup           soup of a single collection
+        """
+        self.soup = html_soup
+        pass
+
+
 class RootCollections(BaseSeleniumScraper):
     """
     Scrapes the starting page for the USF Digital Collection's 'Dime Novel'
@@ -30,6 +46,19 @@ class RootCollections(BaseSeleniumScraper):
         wrapper = self.soup.find('div', id='main-content')
         return wrapper.find_all('section', class_='sbkBrv_SingleResult')
 
+    def get_info_from_collections(self, element_soups):
+        """
+        Converts a list of BeautifulSoup objects into a list of
+        CollectionElement objects, which are designed to make the mining of
+        data and storage in the database easier.
+        """
+        collections = []
+        # Loop through each soup, make CollectionElement, store in collections
+        for element_soup in element_soups:
+            collections.append(CollectionElement(element_soup))
+        # Return list of CollectionElements
+        return collections
+
     def mine(self):
         """
         Calls .scrape(), storing raw HTML in .webdriver.page_source, and a
@@ -39,5 +68,10 @@ class RootCollections(BaseSeleniumScraper):
         updated results. Stores information in a sqlite dB for later
         exportation using models from the schema module.
         """
+        collections = []
+        # Getting HTML snapshot with selenium, storing a soup object in .soup
         self.scrape()
-        collections = self.get_collection_elements()
+        # Returns only the parts of the soup that surround each collection
+        collection_elements = self.get_collection_elements()
+        # Turns each soup element into a CollectionElement object
+        collections = self.get_info_from_collections(collection_elements)
