@@ -20,11 +20,18 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
+  # Install unzip
+  - sudo apt-get install unzip -y
   # Install gecko driver, make executable and move to $PATH
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.13.0/geckodriver-v0.13.0-linux64.tar.gz
   - tar -xvzf geckodriver*
   - chmod +x geckodriver
-  - sudo mv geckodriver /usr/local/bin/
+  - sudo mv -f geckodriver /usr/local/bin/
+  # Install chrome driver, make executable and move to $PATH
+  - wget -N http://chromedriver.storage.googleapis.com/2.26/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
+  - chmod +x chromedriver
+  - sudo mv -f chromedriver /usr/local/bin/
 # command to run tests
 script:
   - nose2
