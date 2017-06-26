@@ -91,13 +91,15 @@ class BaseSeleniumScraper(BaseAbstractScraper):
         """
         self.driver.quit()
 
-    def soup(self):
+    def refresh_soup(self):
         """
         Soups the data located at .driver.page_source. Called during initial
         scrape, but can also be called again in .mine() or other custom methods
         to get a BeautifulSoup object loaded with the updated HTML
         """
-        return BeautifulSoup(self.driver.page_source, 'html.parser')
+        # Use current driver page soup to re-soup, then return value
+        self.soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+        return self.soup
 
     def scrape(self, silent=False, delay=True):
         """
@@ -109,6 +111,7 @@ class BaseSeleniumScraper(BaseAbstractScraper):
         """
         # Calling parent class .scrape() method, which only prints url or not
         super().scrape(silent=silent)
-        data_soup = self.fetch()
-        # Return result of .fetch() as a BeautifulSoup object
-        return BeautifulSoup(data_soup, 'html.parser')
+        # Store result of .fetch() as a BeautifulSoup object
+        self.soup = BeautifulSoup(self.fetch(), 'html.parser')
+        # Return soup
+        return self.soup

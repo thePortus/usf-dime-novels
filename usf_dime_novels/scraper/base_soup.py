@@ -19,6 +19,7 @@ class BaseHTMLScraper(BaseAbstractScraper):
     and properties. The .fetch() method
     """
     mode = 'html'
+    soup = None
 
     def fetch(self, delay=True):
         """
@@ -54,7 +55,8 @@ class BaseHTMLScraper(BaseAbstractScraper):
         # Calling parent class .scrape() method, which only prints url or not
         super().scrape(silent=silent)
         # Convert result of .fetch() to a BeautifulSoup object and return
-        return BeautifulSoup(self.fetch(delay=delay), 'html.parser')
+        self.soup = BeautifulSoup(self.fetch(delay=delay), 'html.parser')
+        return self.soup
 
 
 class BaseXMLScraper(BaseHTMLScraper):
