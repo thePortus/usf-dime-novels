@@ -16,10 +16,7 @@ from usf_dime_novels.common import settings, Printer
 
 
 def database(mode='live'):
-    if mode == 'testing':
-        return sql.SqliteDatabase(settings.TESTING_DB)
-    else:
-        return sql.SqliteDatabase(settings.LIVE_DB)
+    sql.SqliteDatabase(settings.LIVE_DB)
 
 
 def init_db(mode='live'):
