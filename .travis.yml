@@ -16,13 +16,23 @@ env:
 install:
   - pip install -r requirements.txt
 before_script:
+  # install unzip
+  - sudo apt-get install unzip -y
+  # install Firefox
+  - sudo add-apt-repository ppa:ubuntu-mozilla-security/ppa
+  - sudo apt-get update
+  - sudo apt-get install firefox
+  # install Chrome
+  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+  - sudo apt-get update
+  - sudo apt-get install google-chrome-stable
   # configure environment to run headless selenium tests
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
-  # Install unzip
-  - sudo apt-get install unzip -y
-  # Install gecko driver, make executable and move to $PATH
+
+  # install gecko driver, make executable and move to $PATH
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.13.0/geckodriver-v0.13.0-linux64.tar.gz
   - tar -xvzf geckodriver*
   - chmod +x geckodriver
