@@ -15,11 +15,26 @@ https://github.com/thePortus/dimenovels
 """
 
 import sys
+import os
 # For use with Travis CI and Coveralls testing suites
 # from pkg_resources import get_distribution
-from .db import database, init_db
+from .db import init_db
+from .common import Printer
 
-init_db()
+
+def get_db():
+    """
+    Checks for an environment variable. If TESTING_DB=true has been set, loads
+    returns the testing database, otherwise the live database.
+    """
+    if os.getenv('USF_DIME_NOVEL_DB'):
+        Printer('Testing Database in Use')
+        return init_db(mode='testing')
+    return init_db(mode='live')
+
+
+# Loads the database, all other modules should call this to interact with dB
+database = get_db()
 
 if sys.version_info[0] != 3:
     raise ImportError('Python Version 3 or above is required for this module.')
