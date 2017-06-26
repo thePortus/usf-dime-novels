@@ -21,7 +21,6 @@ install:
   - sleep 3
 # command to run tests
 script:
-  - cd usf-dime-novels
   - nosetests --with-coverage --cover-package=usf_dime_novels
 after_success:
   coveralls
