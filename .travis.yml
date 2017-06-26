@@ -18,7 +18,7 @@ install:
 before_script:
   # edit /etc/apt/sources.list to allow legacy distribution packages
   - sudo sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
-  - sudo apt-get update && sudo apt-get dist-upgrade
+  - sudo apt-get update && sudo apt-get dist-upgrade -y
   # install unzip
   - sudo apt-get install unzip -y
   # install Firefox
