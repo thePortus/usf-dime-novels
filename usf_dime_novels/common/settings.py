@@ -4,7 +4,7 @@ By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
 The global settings file
 """
-import os
+# import os
 
 # The URL of the hosting domain
 ROOT_URL = 'http://digital.lib.usf.edu/'
@@ -24,15 +24,15 @@ TEST_URLS = {
 }
 
 # Build the absolute path to the database directory
-DB_DIR = os.path.join(
-    # Get path of current file
-    os.path.abspath(os.path.dirname(__file__)),
-    # Move up one directory
-    '..',
-    # Move into the db and then files subdirectories
-    'db',
-    'files'
-)
+# DB_DIR = os.path.join(
+# Get path of current file
+# os.path.abspath(os.path.dirname(__file__)),
+# Move up one directory
+# '..',
+# Move into the db and then files subdirectories
+# 'db',
+# 'files'
+# )
 # Set the live and testing database names
-LIVE_DB = os.path.join(DB_DIR, 'dimenovels.db')
-TESTING_DB = os.path.join(DB_DIR, 'testing.db')
+LIVE_DB = 'dimenovels.db'
+TESTING_DB = 'dimenovels.db'
