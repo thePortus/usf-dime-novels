@@ -15,35 +15,29 @@ env:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+# install firefox and chrome for selenium tests
+addons:
+  chrome: stable
+  firefox: latest
 before_script:
-  # edit /etc/apt/sources.list to allow legacy distribution packages
-  - sudo sed -i -re 's/([a-z]{2}\.)?archive.ubuntu.com|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
-  - sudo apt-get update && sudo apt-get dist-upgrade -y
+  # for Selenium testing....
   # install unzip
   - sudo apt-get install unzip -y
-  # install Firefox
-  - sudo add-apt-repository ppa:ubuntu-mozilla-security/ppa -y
-  - sudo apt-get update
-  - sudo apt-get install firefox -y
-  # install Chrome
-  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-  - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-  - sudo apt-get update
-  - sudo apt-get install google-chrome-stable -y
   # configure environment to run headless selenium tests
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
-
-  # install gecko driver, make executable and move to $PATH
+  # download gecko (Firefox) and chrome webdrivers
   - wget https://github.com/mozilla/geckodriver/releases/download/v0.13.0/geckodriver-v0.13.0-linux64.tar.gz
-  - tar -xvzf geckodriver*
-  - chmod +x geckodriver
-  - sudo mv -f geckodriver /usr/local/bin/
-  # Install chrome driver, make executable and move to $PATH
   - wget -N http://chromedriver.storage.googleapis.com/2.26/chromedriver_linux64.zip
+  # extract webdrivers
+  - tar -xvzf geckodriver*
   - unzip chromedriver_linux64.zip
+  # make webdrivers executable
+  - chmod +x geckodriver
   - chmod +x chromedriver
+  # move webdrivers within $PATH
+  - sudo mv -f geckodriver /usr/local/bin/
   - sudo mv -f chromedriver /usr/local/bin/
 # command to run tests
 script:
