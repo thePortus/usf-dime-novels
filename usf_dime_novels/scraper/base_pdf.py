@@ -6,7 +6,8 @@ The base scraper classes inherited by all scrapers designed to mine data
 from specific HTML, XML, or KML pages. At this time, HTML, XML, and KML
 scrapers are identical, but specialized functions will be added in the future.
 """
-import requests
+import io
+
 import PyPDF2
 
 from .base_abstract import BaseAbstractScraper
@@ -18,31 +19,7 @@ class BasePDFScraper(BaseAbstractScraper):
     base_abstract_scraper.py for documentation about parent class methods
     and properties. The .fetch() method
     """
-    mode = 'html'
-    data = None
-
-    def fetch(self, delay=True):
-        """
-        Uses requests module to get data from location specified in .url.
-        As with other base scraper classes, it enforces a delay by calling
-        self.wait, unless overridden by the delay argument. Returns data
-        in plaintext format. If any problem is encountered when requesting the
-        data (e.g. a timeout), .fetch() will call itself recursively until a
-        successfull request is made.
-
-        arguments
-        delay           bool        whether to enforce delay in scraping
-        """
-        # Enforce scraping delay
-        if delay:
-            self.wait()
-        # Attempt to request data
-        try:
-            return requests.get(self.url).content
-        # If any error encountered, call .fetch() recursively
-        except:
-            print('Retrying', self.url)
-            return self.fetch()
+    mode = 'pdf'
 
     def scrape(self, silent=False, delay=True):
         """
@@ -55,7 +32,13 @@ class BasePDFScraper(BaseAbstractScraper):
         # Calling parent class .scrape() method, which only prints url or not
         super().scrape(silent=silent)
         # Request PDF, create PyPDF2 reader with it and store in .data
-        self.data = PyPDF2.PdfFileReader(self.fetch())
+        content = self.fetch()
+        # If a web request was made, get the .content property
+        if self.method == 'request':
+            content = content.content
+        # Convert binary PDF to readable stream
+        content = io.BytesIO(content)
+        self.data = PyPDF2.PdfFileReader(content)
         return self.data
 
     def mine(self):

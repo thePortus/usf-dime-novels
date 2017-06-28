@@ -14,6 +14,7 @@ For more information, see
 https://github.com/thePortus/dimenovels
 """
 import sys
+from . import definitions
 from .common import database, Printer
 from . import db
 # For use with Travis CI and Coveralls testing suites

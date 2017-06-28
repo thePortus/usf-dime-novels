@@ -11,6 +11,7 @@ import os
 import peewee as sql
 
 from usf_dime_novels.common import settings, Printer
+from usf_dime_novels import definitions
 
 
 def config_db():
@@ -30,9 +31,9 @@ def config_db():
         mode = 'testing'
     else:
         mode = 'live'
-    # Build dB path from current directory, using subdir specified in settings
+    # Build dB path from module dir, using the subdir specified in settings
     database_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
+        definitions.MODULE_DIRPATH,
         settings.DB_DIR
     )
     # Check if the database directory exists, if not, create it

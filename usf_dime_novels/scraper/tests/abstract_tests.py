@@ -13,18 +13,20 @@ from ...common import settings
 class AbstractBaseTester:
     """
     Parent object which is to be inherited by all actual scraper test objects.
-    Prior to running the unit test, it will use its .url on its .scraper_class
+    Prior to running the unit test, it will use its .path on its .scraper_class
     to instantiate the scraper object to be tested. All child classes must
     specify these properties
     """
     # CHILDREN MUST SPECIFY, URL to test the scraper on
-    url = None
+    path = None
     # CHILDREN MUST SPECIFY, Specific scraper class to test by sending the URL
     scraper_class = None
     # Scraper object, instantiated by the .ready_scraper() method
     scraper = None
     # Data from success scrape operation
     data = None
+    # Whether data come from web or local file
+    method = 'request'
 
     def setUp(self):
         """
@@ -33,7 +35,7 @@ class AbstractBaseTester:
         ensures that there is a working scraper instance at .scraper before
         any tests are run by child classes.
         """
-        self.scraper = self.scraper_class(self.url)
+        self.scraper = self.scraper_class(self.path, method=self.method)
         return True
 
 
@@ -50,7 +52,7 @@ class AbstractSeleniumTester(AbstractBaseTester):
         Unit test setup function, will be overridden by child classes which
         specify browser to test
         """
-        self.scraper = self.scraper_class(self.url)
+        self.scraper = self.scraper_class(self.path)
         return True
 
     def tearDown(self):

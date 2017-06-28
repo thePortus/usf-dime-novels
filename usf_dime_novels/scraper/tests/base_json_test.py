@@ -17,7 +17,7 @@ class TestBaseJSONScraper(AbstractBaseTester, unittest.TestCase):
     base_test_scraper.py for setup and inherited functions
     """
     scraper_class = BaseJSONScraper
-    url = settings.TEST_URLS['json']
+    path = settings.TEST_URLS['json']
 
     def test_scrape(self):
         """

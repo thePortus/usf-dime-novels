@@ -20,7 +20,7 @@ class TestCollections(AbstractSeleniumTester, unittest.TestCase):
     base_test_scraper.py for setup and inherited functions
     """
     scraper_class = Collections
-    url = os.path.join(settings.ROOT_PATH, settings.PROJECT_PATH)
+    path = os.path.join(settings.ROOT_PATH, settings.PROJECT_PATH)
 
     def test_scrape(self):
         """

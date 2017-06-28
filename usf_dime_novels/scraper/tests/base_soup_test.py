@@ -23,7 +23,7 @@ class TestBaseHTMLScraper(AbstractBaseTester, unittest.TestCase):
     base_test_scraper.py for setup and inherited functions
     """
     scraper_class = BaseHTMLScraper
-    url = settings.TEST_URLS['html']
+    path = settings.TEST_URLS['html']
 
     def test_scrape(self):
         """
@@ -44,7 +44,7 @@ class TestXMLScraper(AbstractBaseTester, unittest.TestCase):
     base_test_scraper.py for setup and inherited functions
     """
     scraper_class = BaseXMLScraper
-    url = settings.TEST_URLS['xml']
+    path = settings.TEST_URLS['xml']
 
     def test_scrape(self):
         """
@@ -65,7 +65,7 @@ class TestKMLScraper(AbstractBaseTester, unittest.TestCase):
     base_test_scraper.py for setup and inherited functions
     """
     scraper_class = BaseKMLScraper
-    url = settings.TEST_URLS['kml']
+    path = settings.TEST_URLS['kml']
 
     def test_scrape(self):
         """

@@ -11,14 +11,13 @@ from bs4 import BeautifulSoup
 from .base_abstract import BaseAbstractScraper
 
 
-class BaseHTMLScraper(BaseAbstractScraper):
+class BaseSoupScraper(BaseAbstractScraper):
     """
     Most commonly used parent class to specific page scrapers. See
     base_abstract_scraper.py for documentation about parent class methods
     and properties. The .fetch() method
     """
-    mode = 'html'
-    data = None
+    mode = None
 
     def fetch(self, delay=True):
         """
@@ -28,8 +27,13 @@ class BaseHTMLScraper(BaseAbstractScraper):
         html_data = super().fetch(delay=delay)
         if self.method == 'request':
             return html_data.text
-        # If .method was a file object, simple return .fetch()
-        return html_data
+        # If .method was a file, convert file to large text string and return
+        else:
+            html_string = ''
+            # Loop through lines in file, add endline char and append
+            for line in html_data.readlines():
+                html_string += line + '\n'
+            return html_string
 
     def scrape(self, silent=False, delay=True):
         """
@@ -46,7 +50,16 @@ class BaseHTMLScraper(BaseAbstractScraper):
         return self.data
 
 
-class BaseXMLScraper(BaseHTMLScraper):
+class BaseHTMLScraper(BaseSoupScraper):
+    """
+    Most commonly used parent class to specific page scrapers. See
+    base_abstract_scraper.py for documentation about parent class methods
+    and properties. The .fetch() method
+    """
+    mode = 'html'
+
+
+class BaseXMLScraper(BaseSoupScraper):
     """
     Base class for all scrapers of XML pages. See BaseHTMLScraper and
     base_abstract_scraper.py for documentation about parent classes' methods
@@ -55,7 +68,7 @@ class BaseXMLScraper(BaseHTMLScraper):
     mode = 'xml'
 
 
-class BaseKMLScraper(BaseHTMLScraper):
+class BaseKMLScraper(BaseSoupScraper):
     """
     Base class for all scrapers of Google Earth's KML pages. See
     BaseHTMLScraper and base_abstract_scraper.py for documentation about parent

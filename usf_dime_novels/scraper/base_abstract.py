@@ -22,9 +22,12 @@ class BaseAbstractScraper:
     """
     # Path of data to be scraped
     path = None
+    # Storage for data retrieved (and sometimes converted by child classes)
+    data = None
     # Method of data acquisition (request or file)
     method = 'request'
     # Character encoding (only matters for the 'file' method)
+    encoding = 'utf-8'
     # Delay enforced during web scraping
     delay = settings.PAGE_LOAD_DELAY
     # The root path of the domain hosting the data (e.g. https://github.com)
@@ -85,16 +88,16 @@ class BaseAbstractScraper:
                 return self.fetch()
         # Otherwise, assume local file request is specified
         else:
-            file_data = ''
-            # Open file
+            # If scraper is a PDF, file must be opened in binary
+            if self.mode == 'pdf':
+                with open(self.path, 'rb') as read_file:
+                    content = read_file.read()
+                    return content
+            # Otherwise return file object in plaintext
             with open(self.path, 'r+', encoding=self.encoding) as read_file:
-                # Loop through each line and build a large string
-                for file_line in read_file.readlines():
-                    # Make sure to re-add the endline char
-                    file_data += file_line + '\n'
-            return file_data
+                return read_file
 
-    def scrape(self, silent=False):
+    def scrape(self, silent=False, delay=True):
         """
         Called by child class .scrape() function, which passes the silent
         option to it. If not silent, it prints the path being scraped. child

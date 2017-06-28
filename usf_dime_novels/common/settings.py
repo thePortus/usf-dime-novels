@@ -4,7 +4,6 @@ By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
 The global settings file
 """
-
 # The URL of the hosting domain
 ROOT_PATH = 'http://digital.lib.usf.edu/'
 
@@ -22,8 +21,11 @@ TEST_URLS = {
     'json': 'http://ip.jsontest.com/'
 }
 
+# Fixture directory filepath for running automated tests on local file scrapers
+TEST_FIXTURES_DIR = 'tests/fixtures'
+
 # Build the absolute path to the database directory
-DB_DIR = 'files'
+DB_DIR = 'db/files'
 # Set the live and testing database names
 LIVE_DB = 'dimenovels.db'
 TESTING_DB = 'testing.db'
