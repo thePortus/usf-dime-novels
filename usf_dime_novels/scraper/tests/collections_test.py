@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""scraper/tests/root_collections_test.py
+"""scraper/tests/collections_test.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
 Contains unit tests for the parent HTML, XML, and KML scraper objects
@@ -9,18 +9,18 @@ import unittest
 
 from bs4 import BeautifulSoup
 
-from ..root_collections import RootCollections
+from ..collections import Collections
 from .abstract_tests import AbstractSeleniumTester
 from ...common import settings
 
 
-class TestRootCollections(AbstractSeleniumTester, unittest.TestCase):
+class TestCollections(AbstractSeleniumTester, unittest.TestCase):
     """
     Unit test object for the parent HTML scraper object. See
     base_test_scraper.py for setup and inherited functions
     """
-    scraper_class = RootCollections
-    url = os.path.join(settings.ROOT_URL, settings.PROJECT_PATH)
+    scraper_class = Collections
+    url = os.path.join(settings.ROOT_PATH, settings.PROJECT_PATH)
 
     def test_scrape(self):
         """

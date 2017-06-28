@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-"""tests/fixtures/__init__.py
+"""scraper/tests/controller_test.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
-The init file the module-wide test fixtures
+The unit test for the scraper controller
 """
+
+# TODO

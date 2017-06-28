@@ -6,8 +6,6 @@ The parent class inherited by all JSON scraper objects.
 """
 import json
 
-import requests
-
 from .base_abstract import BaseAbstractScraper
 
 
@@ -24,37 +22,30 @@ class BaseJSONScraper(BaseAbstractScraper):
 
     def fetch(self, delay=True, truncate=False):
         """
-        Uses requests module to get data from location specified in .url.
-        As with other base scraper classes, it enforces a delay by calling
-        self.wait, unless overridden by the delay argument. Returns data
-        in plaintext format. If truncate argument is True, it will truncate
-        the last comma in the JSON (this is found on some sites, and
-        will cause a problem for Python's internal json module unless removed).
-        If any problem is encountered when requesting the data
-        (e.g. a timeout), .fetch() will call itself recursively until a
-        successfull request is made.
+        Uses parent class .fetch() to get data either from the web via the
+        requests module, or from a local file. If web request is made, makes
+        sure to grab the .text property of the response object. If truncate
+        argument is True, it will truncate the last comma in the JSON
+        (this is found on some sites, and will cause a problem for Python's
+        internal json module unless removed). If any problem is encountered
+        when requesting the data (e.g. a timeout), .fetch() will call itself'
+        recursively until a successfull request is made.
 
         kwargs
         delay           bool        whether to enforce delay in scraping
         truncate        bool        truncate ultimate comma in JSON data
         """
-        # Enforce scraping delay
-        if delay:
-            self.wait()
-        # Attempt to request data
-        try:
-            webdata = requests.get(self.url).text
-            # Splice extraneous ending comma and readding bracket
-            if truncate:
-                return webdata.text[:-3] + ']'
-            # Else, return JSON as is
-            return webdata
-        # If any error encountered, retry request by calling method recursively
-        except:
-            print('Retrying', self.url)
-            return self.fetch()
+        # Get data (web request or file) from parent method
+        jsondata = super().fetch(delay=delay)
+        # If web request specified, get .text of response object
+        if self.method == 'request':
+            jsondata = jsondata.text
+        # If option to truncate ultimate comma is specified, do so
+        if truncate:
+            jsondata = jsondata[:-3] + ']'
+        return jsondata
 
-    def scrape(self, silent=False, delay=True, truncate=True):
+    def scrape(self, silent=False, delay=True, truncate=False):
         """
         Calls .fetch(), converts the plaintext data into a native Python JSON
         object, and returns the result

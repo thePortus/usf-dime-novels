@@ -11,7 +11,7 @@ config = {
         "usf_dime_novels.db"
         "usf_dime_novels.scraper"
     ],
-    'install_requires': [],
+    'install_requires': ['requests', 'BeautifulSoup4', 'peewee', 'selenium'],
     'version': "0.0.1",
     'description': "Python module to interact with the digital Dime Novel " +
     "collection from the University of South Florida",

@@ -26,7 +26,7 @@ class TestBaseJSONScraper(AbstractBaseTester, unittest.TestCase):
         """
         return self.assertEqual(
             type(
-                self.scraper.scrape(silent=True, delay=False, truncate=True)
+                self.scraper.scrape(silent=True, delay=False)
             ),
             dict
         )

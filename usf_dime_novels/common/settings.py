@@ -6,7 +6,7 @@ The global settings file
 """
 
 # The URL of the hosting domain
-ROOT_URL = 'http://digital.lib.usf.edu/'
+ROOT_PATH = 'http://digital.lib.usf.edu/'
 
 # The subpath to the project home
 PROJECT_PATH = 'dimenovels/all'

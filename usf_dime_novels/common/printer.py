@@ -20,6 +20,7 @@ class Printer:
     """
     newline = True
     clear = False
+    silent = False
 
     def __init__(self, output, *args, **kwargs):
         """
@@ -29,12 +30,16 @@ class Printer:
         kwargs
         newline     boolean     output with a \n (defaults True)
         clear       boolean     clear prior output (defaults False)
+        silent      boolean     flag for silent (testing) mode
         """
         output = str(output)
-        if 'newline' in kwargs.keys():
+        keys = kwargs.keys()
+        if 'newline' in keys:
             self.newline = kwargs['newline']
-        if 'clear' in kwargs.keys():
+        if 'clear' in keys:
             self.clear = kwargs['clear']
+        if 'silent' in keys:
+            self.silent = kwargs['silent']
         if self.clear:
             self.clear_screen()
         # Loop through passed arguments, convert to string and add to output
@@ -43,9 +48,11 @@ class Printer:
         # If newline option passed, add endline char
         if self.newline:
             output += '\n'
-        # Write the output to the terminal and flush to make the update visible
-        sys.stdout.write(output)
-        sys.stdout.flush()
+        # Ensuring 'silent' mode (for testing) has not been set
+        if not self.silent:
+            # Write the output to the terminal and flush
+            sys.stdout.write(output)
+            sys.stdout.flush()
 
     def clear_screen(self):
         """

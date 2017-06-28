@@ -17,7 +17,7 @@ example.
 import os
 
 from ..common import settings
-from .root_collections import RootCollections
+from .collections import Collections
 
 
 class Controller:
@@ -32,6 +32,6 @@ class Controller:
         # Build full URL from the settings file
         path = os.path.join(settings.ROOT_URL, settings.PROJECT_PATH)
         # Create root scraper object
-        root_collections = RootCollections(url=path)
+        root_collections = Collections(url=path)
         # Begin scrape
         root_collections.scrape()

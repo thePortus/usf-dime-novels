@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""scraper/tests/firefox_selenium_test.py
+"""scraper/tests/base_selenium_test.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
 Contains the unit tests for selenium using Firefox
@@ -9,7 +9,7 @@ import unittest
 from .abstract_tests import AbstractSeleniumTester
 
 
-class TestFirefoxScraper(AbstractSeleniumTester, unittest.TestCase):
+class TestBaseSeleniumScraper(AbstractSeleniumTester, unittest.TestCase):
     """
     Unit test for the selenium scraper using Firefox
     """

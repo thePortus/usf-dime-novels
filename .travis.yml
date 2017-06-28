@@ -12,6 +12,7 @@ dist: precise
 # setting environment variables
 env:
   - PACKAGE_VERSION=0.0.1
+  - USF_DIME_NOVEL_DB=testing
 # command to install dependencies
 install:
   - pip install -r requirements/resting.txt

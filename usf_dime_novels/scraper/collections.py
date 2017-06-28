@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""scraper/root_collections.py
+"""scraper/collections.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
 The scraper for the starting page of the University of South Florida Digital
@@ -17,7 +17,7 @@ class CollectionElement:
     main browse page. Its properties give quick access to collection info and
     it enables creating the collection with the database model object
     """
-    soup = None
+    data = None
 
     def __init__(self, html_soup):
         """
@@ -27,21 +27,21 @@ class CollectionElement:
         html_soup           BeautifulSoup           soup of a single collection
         """
         # Drilling down to the internal wrapper <div> tag
-        self.soup = html_soup.find('div', class_='sbkBrv_SingleResultDesc')
+        self.data = html_soup.find('div', class_='sbkBrv_SingleResultDesc')
 
     @property
     def title(self):
         """
         Returns the title of the collection
         """
-        return self.soup.find(
+        return self.data.find(
             'span', class_='briefResultsTitle'
         ).find(
             'a'
         ).get_text()
 
 
-class RootCollections(BaseSeleniumScraper):
+class Collections(BaseSeleniumScraper):
     """
     Scrapes the starting page for the USF Digital Collection's 'Dime Novel'
     collection. Gathers any links on the page, then looks for the link to the
@@ -53,11 +53,11 @@ class RootCollections(BaseSeleniumScraper):
 
     def get_collection_elements(self):
         """
-        Drills into .soup looking for the wrapper containing the list of
+        Drills into .data looking for the wrapper containing the list of
         collections. Then finds the <section> tag for each collection in the
         list, returning them as a list of BeautifulSoup objects.
         """
-        wrapper = self.soup.find('div', id='main-content')
+        wrapper = self.data.find('div', id='main-content')
         return wrapper.find_all('section', class_='sbkBrv_SingleResult')
 
     def get_info_from_collections(self, element_soups):
@@ -78,16 +78,15 @@ class RootCollections(BaseSeleniumScraper):
         Calls .scrape(), storing raw HTML in .webdriver.page_source, and a
         parsed BeautifulSoup object in data. Then uses the object to
         locate data on subcollections, both metadata, and links to items in the
-        collection by clicking on the object and calling .soup() to get the
-        updated results. Stores information in a sqlite dB for later
-        exportation using models from the schema module.
+        collection. Stores information in a sqlite dB for later exportation
+        using models from the schema module.
         """
         collections = []
-        # Getting HTML snapshot with selenium, storing a soup object in .soup
+        # Getting HTML snapshot with selenium, storing a soup object in .data
         self.scrape()
         # Returns only the parts of the soup that surround each collection
         collection_elements = self.get_collection_elements()
         # Turns each soup element into a CollectionElement object
         collections = self.get_info_from_collections(collection_elements)
         # NOTE THE RETURN VALUE IS MERELY TO PASS TESTING< MUST BE CHANGED
-        return self.soup
+        return self.data
