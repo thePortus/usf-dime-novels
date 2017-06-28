@@ -15,7 +15,7 @@ env:
   - USF_DIME_NOVEL_DB=testing
 # command to install dependencies
 install:
-  - pip install -r requirements/resting.txt
+  - pip install -r requirements/testing.txt
   - pip install coveralls
 # install firefox and chrome for selenium tests
 addons:
