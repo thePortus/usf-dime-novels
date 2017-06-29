@@ -6,17 +6,14 @@ Contains the unit tests for selenium using Firefox
 """
 import unittest
 
-from .abstract_tests import AbstractSeleniumTester
+from .abstract_tests import AbstractBaseSeleniumTester
+from ..base_selenium import BaseSeleniumScraper
+from ...common import settings
 
 
-class TestBaseSeleniumScraper(AbstractSeleniumTester, unittest.TestCase):
+class TestBaseSeleniumScraper(AbstractBaseSeleniumTester, unittest.TestCase):
     """
     Unit test for the selenium scraper using Firefox
     """
-
-    def setUp(self):
-        """
-        Overrides the parent class setUp function, specifying FireFox
-        """
-        self.scraper = self.scraper_class(self.url, browser='firefox')
-        return True
+    scraper_class = BaseSeleniumScraper
+    path = settings.TEST_URLS['html']

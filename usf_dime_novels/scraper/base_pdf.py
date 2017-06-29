@@ -10,10 +10,10 @@ import io
 
 import PyPDF2
 
-from .base_abstract import BaseAbstractScraper
+from .abstract_base import AbstractBaseScraper
 
 
-class BasePDFScraper(BaseAbstractScraper):
+class BasePDFScraper(AbstractBaseScraper):
     """
     Most commonly used parent class to specific page scrapers. See
     base_abstract_scraper.py for documentation about parent class methods
@@ -30,7 +30,7 @@ class BasePDFScraper(BaseAbstractScraper):
         delay           bool        whether to enforce delay in scraping
         """
         # Calling parent class .scrape() method, which only prints url or not
-        super().scrape(silent=silent)
+        super().scrape(silent=silent, delay=delay)
         # Request PDF, create PyPDF2 reader with it and store in .data
         content = self.fetch()
         # If a web request was made, get the .content property

@@ -30,8 +30,8 @@ class Controller:
         needed, you may still call them from __init__
         """
         # Build full URL from the settings file
-        path = os.path.join(settings.ROOT_URL, settings.PROJECT_PATH)
+        path = os.path.join(settings.ROOT_PATH, settings.PROJECT_PATH)
         # Create root scraper object
-        root_collections = Collections(url=path)
+        root_collections = Collections(path=path)
         # Begin scrape
         root_collections.scrape()

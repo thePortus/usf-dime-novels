@@ -6,10 +6,10 @@ The parent class inherited by all JSON scraper objects.
 """
 import json
 
-from .base_abstract import BaseAbstractScraper
+from .abstract_base import AbstractBaseScraper
 
 
-class BaseJSONScraper(BaseAbstractScraper):
+class BaseJSONScraper(AbstractBaseScraper):
     """
     The base class for all JSON scrapers. See base_abstract_scraper.py for
     further information about this object's parent class. The .fetch() method

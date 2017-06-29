@@ -7,11 +7,15 @@ Contains the unit tests for the parent JSON scraper object
 import unittest
 
 from ..base_json import BaseJSONScraper
-from .abstract_tests import AbstractBaseTester
+from .abstract_tests import AbstractBaseTester, AbstractWebMixinTester
 from ...common import settings
 
 
-class TestBaseJSONScraper(AbstractBaseTester, unittest.TestCase):
+class TestBaseJSONScraper(
+    AbstractBaseTester,
+    AbstractWebMixinTester,
+    unittest.TestCase
+):
     """
     Unit test object for the parent JSON scraper object. See
     base_test_scraper.py for setup and inherited functions
@@ -26,7 +30,7 @@ class TestBaseJSONScraper(AbstractBaseTester, unittest.TestCase):
         """
         return self.assertEqual(
             type(
-                self.scraper.scrape(silent=True, delay=False)
+                self.scraper.scrape(silent=True, delay=True)
             ),
             dict
         )

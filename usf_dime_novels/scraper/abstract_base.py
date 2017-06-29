@@ -2,18 +2,19 @@
 """scraper/base_abstract.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
-The abstract base class inherited by all scraper objects in the module.
+The abstract base classes inherited by all scraper objects in the module.
 Ensures specification of the .path property and a few other essentials. Mostly
 contains placeholder functions overridden by all child classes.
 """
 import time
 
 import requests
+from bs4 import BeautifulSoup
 
 from ..common import settings, Printer
 
 
-class BaseAbstractScraper:
+class AbstractBaseScraper:
     """
     Parent scraper object inherited by all scraper classes. Several methods
     are placeholders, but are used by all child classes and so are listed here
@@ -93,9 +94,9 @@ class BaseAbstractScraper:
                 with open(self.path, 'rb') as read_file:
                     content = read_file.read()
                     return content
-            # Otherwise return file object in plaintext
+            # Otherwise return file object as list of text lines
             with open(self.path, 'r+', encoding=self.encoding) as read_file:
-                return read_file
+                return read_file.readlines()
 
     def scrape(self, silent=False, delay=True):
         """
@@ -124,3 +125,42 @@ class BaseAbstractScraper:
         the BaseHTMLScraper to gather all the links in a table)
         """
         pass
+
+
+class AbstractBaseSoupScraper(AbstractBaseScraper):
+    """
+    Most commonly used parent class to specific page scrapers. See
+    base_abstract_scraper.py for documentation about parent class methods
+    and properties. The .fetch() method
+    """
+    mode = None
+
+    def fetch(self, delay=True):
+        """
+        Calls parent class .fetch() and returns result. If .method is 'request'
+        then it returns the .text property of the response object.
+        """
+        html_data = super().fetch(delay=delay)
+        if self.method == 'request':
+            return html_data.text
+        # If .method was a file, convert file to large text string and return
+        else:
+            html_string = ''
+            # Loop through lines in file, add endline char and append
+            for line in html_data:
+                html_string += line + '\n'
+            return html_string
+
+    def scrape(self, silent=False, delay=True):
+        """
+        Calls .fetch(), converts the plaintext data into a BeautifulSoup object
+
+        arguments
+        silent          bool        whether to print the url during scraping
+        delay           bool        whether to enforce delay in scraping
+        """
+        # Calling parent class .scrape() method, which only prints url or not
+        super().scrape(silent=silent)
+        # Convert result of .fetch() to a BeautifulSoup object and return
+        self.data = BeautifulSoup(self.fetch(delay=delay), 'html.parser')
+        return self.data

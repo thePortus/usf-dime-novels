@@ -7,11 +7,11 @@ Contains the base class inherited by all selenium scraper objects.
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-from .base_abstract import BaseAbstractScraper
+from .abstract_base import AbstractBaseScraper
 from ..common import Printer
 
 
-class BaseSeleniumScraper(BaseAbstractScraper):
+class BaseSeleniumScraper(AbstractBaseScraper):
     """
     The base class for all Selenium scrapers. See base_abstract_scraper.py for
     further information about this object's parent class. The .fetch() method

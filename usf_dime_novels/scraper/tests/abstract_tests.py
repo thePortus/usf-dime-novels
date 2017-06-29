@@ -2,12 +2,13 @@
 """scraper/tests/abstract_tests.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
-Contains the parent unit test inherited by all scraper unit tests
+Contains the parent unit test inherited by all scraper unit tests, abstract
+classes meant to be inherited by actual tests come in three main flavors,
+'soup', 'pdf', and 'selenium'. With the exception of selenium, each of these
+abstract classes comes in two types, those meant for testing from web requests,
+and those meant for testing local files.
 """
 from bs4 import BeautifulSoup
-
-from ..base_selenium import BaseSeleniumScraper
-from ...common import settings
 
 
 class AbstractBaseTester:
@@ -17,15 +18,18 @@ class AbstractBaseTester:
     to instantiate the scraper object to be tested. All child classes must
     specify these properties
     """
-    # CHILDREN MUST SPECIFY, URL to test the scraper on
+    # CHILDREN MUST SPECIFY, path to test the scraper on
     path = None
     # CHILDREN MUST SPECIFY, Specific scraper class to test by sending the URL
     scraper_class = None
     # Scraper object, instantiated by the .ready_scraper() method
     scraper = None
-    # Data from success scrape operation
-    data = None
-    # Whether data come from web or local file
+
+
+class AbstractWebMixinTester:
+    """
+    Mix-in class for testing all web request test classes
+    """
     method = 'request'
 
     def setUp(self):
@@ -35,36 +39,42 @@ class AbstractBaseTester:
         ensures that there is a working scraper instance at .scraper before
         any tests are run by child classes.
         """
-        self.scraper = self.scraper_class(self.path, method=self.method)
-        return True
+        self.scraper = self.scraper_class(
+            self.path,
+            method=self.method
+        )
 
 
-class AbstractSeleniumTester(AbstractBaseTester):
+class AbstractFileMixinTester:
     """
-    Unit test object for the parent HTML scraper object. See
-    base_test_scraper.py for setup and inherited functions
+    Mix-in class for testing all web request test classes
     """
-    scraper_class = BaseSeleniumScraper
-    url = settings.TEST_URLS['html']
+    method = 'file'
+    encoding = 'utf-8'
 
     def setUp(self):
         """
-        Unit test setup function, will be overridden by child classes which
-        specify browser to test
+        Unit test setup function, called before any tests are run. Assuming
+        that .url and .scraper_class are correctly specified, this function
+        ensures that there is a working scraper instance at .scraper before
+        any tests are run by child classes.
         """
-        self.scraper = self.scraper_class(self.path)
-        return True
+        self.scraper = self.scraper_class(
+            self.path,
+            method=self.method,
+            encoding=self.encoding
+        )
 
-    def tearDown(self):
-        """
-        Closes the browser window to free memory and reduce clutter.
-        """
-        self.scraper.close()
 
-    def test_scrape(self):
+class AbstractSoupMixinTester:
+    """
+    Mix-in class for testing all BeautifulSoup test classes
+    """
+
+    def test_soup(self):
         """
-        Tests scraper .scrape() method in Firefox and ensures it returns the
-        result as a BeautifulSoup object
+        Tests scraper .scrape() method and ensures that it returns data of
+        in the form of a BeautifulSoup object
         """
         return self.assertEqual(
             type(
@@ -72,3 +82,24 @@ class AbstractSeleniumTester(AbstractBaseTester):
             ),
             BeautifulSoup
         )
+
+
+class AbstractBaseSeleniumTester(AbstractBaseTester):
+    """
+    Unit test object for the parent HTML scraper object. See
+    base_test_scraper.py for setup and inherited functions
+    """
+
+    def setUp(self):
+        """
+        Unit test setup function, will be overridden by child classes which
+        specify browser to test
+        """
+        self.scraper = self.scraper_class(self.path, browser='Firefox')
+        return True
+
+    def tearDown(self):
+        """
+        Closes the browser window to free memory and reduce clutter.
+        """
+        self.scraper.close()
