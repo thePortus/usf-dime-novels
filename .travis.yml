@@ -11,11 +11,11 @@ os: linux
 dist: precise
 # setting environment variables
 env:
-  - PACKAGE_VERSION=0.0.1
-  - USF_DIME_NOVEL_DB=testing
+- PACKAGE_VERSION=0.0.1
+- USF_DIME_NOVEL_DB=testing
 # command to install dependencies
 install:
-  - pip install -r requirements/testing.txt
+  - pip install -r ./requirements/testing.txt
   - pip install coveralls
 # install firefox and chrome for selenium tests
 addons:
