@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""scraper/__init__.py
+"""scraper/base/__init__.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
-================================ Scraper Module ===============================
+=============================== Scraper Module ================================
 
 The init file for the scraper module
 
@@ -38,7 +38,7 @@ The range of base scrapers available are as follows...
 5) BaseSeleniumScraper (base_selenium.py) Selenium into BeautifulSoup
 
 e.g.
-from .base_soup_scrapers import BaseHTMLScraper
+from .base import BaseHTMLScraper
 
 
 class GitRepoScraper(BaseHTMLScraper):
@@ -69,4 +69,3 @@ which will actually call one or more scrapers in a manner you determine
 when writing its functions. Then, all you need to do is call the controller
 object and the scraping will begin.
 """
-from .controller import Controller

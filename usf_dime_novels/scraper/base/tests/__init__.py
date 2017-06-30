@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-"""tests/fixtures/__init__.py
+"""scraper/base/tests/__init__.py
 By David J. Thomas, thePortus.com, dave.a.base@gmail.com
 
-The init file the module-wide test fixtures
+The init file for the base scraper module tests
 """

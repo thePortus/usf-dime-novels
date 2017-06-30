@@ -8,10 +8,13 @@ config = {
     'packages': [
         "usf_dime_novels",
         "usf_dime_novels.common",
-        "usf_dime_novels.db"
-        "usf_dime_novels.scraper"
+        "usf_dime_novels.db",
+        "usf_dime_novels.scraper",
+        "usf_dime_novels.scraper.base"
     ],
-    'install_requires': [],
+    'install_requires': [
+        'requests', 'BeautifulSoup4', 'peewee', 'selenium', 'PyPDF2'
+    ],
     'version': "0.0.1",
     'description': "Python module to interact with the digital Dime Novel " +
     "collection from the University of South Florida",

@@ -19,6 +19,8 @@ class Collection(BaseModel):
     publication_date = sql.DateTimeField()
     formatting = sql.CharField()
     source_institution = sql.CharField()
+    link_id = sql.CharField()
+    url = sql.CharField()
 
     @property
     def publishers(self):
@@ -65,6 +67,21 @@ class Publisher(BaseModel):
         )
 
 
+class PublisherInCollection(BaseModel):
+    """
+    The many-to-many table representing each time a publisher was responsible
+    for a collection.
+    """
+    collection = sql.ForeignKeyField(
+        Collection,
+        related_name='publishers_in_collection'
+    )
+    publisher = sql.ForeignKeyField(
+        Publisher,
+        related_name='collections_of_publisher'
+    )
+
+
 class Subject(BaseModel):
     name = sql.CharField()
 
@@ -83,19 +100,16 @@ class Subject(BaseModel):
         )
 
 
-class PublisherInCollection(BaseModel):
-    """
-    The many-to-many table representing each time a publisher was responsible
-    for a collection.
-    """
-    collection = sql.ForeignKey(Collection, related_name='publishers')
-    publisher = sql.ForeignKey(Publisher, related_name='collections')
-
-
 class SubjectInCollection(BaseModel):
     """
     The many-to-many table representing each time a subject appears in a
     collection.
     """
-    collection = sql.ForeignKey(Collection, related_name='publishers')
-    subject = sql.ForeignKey(Publisher, related_name='collections')
+    collection = sql.ForeignKeyField(
+        Collection,
+        related_name='subjects_in_collection'
+    )
+    subject = sql.ForeignKeyField(
+        Publisher,
+        related_name='collections_with_subject'
+    )

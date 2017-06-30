@@ -13,7 +13,7 @@ class TestSettings(unittest.TestCase):
 
     def test_settings(self):
         if (
-            settings.ROOT_URL and
+            settings.ROOT_PATH and
             settings.PROJECT_PATH and
             settings.PAGE_LOAD_DELAY
         ):

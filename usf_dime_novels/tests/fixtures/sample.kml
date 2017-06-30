@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>KML Test Sample Samples</name>
+    <description>A KML sample for testing</description>
+    <Folder>
+      <name>Placemarks</name>
+      <description>Sample placemarks</description>
+      <Placemark>
+        <name>Sample placemark</name>
+        <description>A placemark, for testing purposes</description>
+        <Point>
+          <coordinates>-122.0822035425683,37.42228990140251,0</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>

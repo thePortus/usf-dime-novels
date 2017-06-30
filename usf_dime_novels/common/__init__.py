@@ -8,3 +8,4 @@ functions and objects common to multiple modules
 
 from . import settings
 from .printer import Printer
+from .database import database

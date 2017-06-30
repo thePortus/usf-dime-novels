@@ -36,7 +36,7 @@ To install the module...
 git clone https://github.com/thePortus/dimenovels.git
 cd dimenovels
 # Install the Python dependencies
-pip3 install -r requirements.txt
+pip3 install -r requirements/all.txt
 ```
 
 This module also requires that you install Selenium webdriver for your browser of choice. To do so, visit the following...

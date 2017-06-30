@@ -11,14 +11,18 @@ from .. import Printer
 
 class TestPrinter(unittest.TestCase):
 
+    def test_clear_screen(self):
+        Printer('', clear=True)
+        return True
+
     def test_print(self):
         first_part = 'This is a test of the'
         second_part = 'Printer() object'
-        Printer(first_part, second_part)
+        Printer(first_part, second_part, silent=True)
         return True
 
     def test_mixed_args(self):
         first_part = 'Testing Printer mixed with integers like'
         second_part = 123
-        Printer(first_part, second_part)
+        Printer(first_part, second_part, silent=True)
         return True
