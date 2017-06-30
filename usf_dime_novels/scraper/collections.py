@@ -8,7 +8,7 @@ collections, which dynamically load metadata and item collections. This scraper
 Is the only one that needs to be called to initiate a scrape of the entire
 site, as it will call subsequent scrapers upon finding links to subcollections.
 """
-from .base_selenium import BaseSeleniumScraper
+from .base_scrapers import BaseSeleniumScraper
 
 
 class CollectionElement:

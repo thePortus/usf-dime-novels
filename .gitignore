@@ -17,6 +17,7 @@ dist
 *.db
 input/*
 output/*
+test_script.py
 
 # OSX and Project Files
 *.sublime-*

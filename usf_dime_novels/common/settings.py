@@ -26,7 +26,8 @@ TEST_URLS = {
     'html': 'http://digital.lib.usf.edu/dimenovels/all',
     'xml': 'https://www.w3schools.com/xml/note.xml',
     'kml': 'https://developers.google.com/kml/documentation/KML_Samples.kml',
-    'json': 'http://ip.jsontest.com/'
+    'json': 'http://ip.jsontest.com/',
+    'pdf': 'http://che.org.il/wp-content/uploads/2016/12/pdf-sample.pdf'
 }
 
 # Local paths for sample fixtures for automated testing
